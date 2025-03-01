@@ -1,0 +1,110 @@
+.mainbody{
+    box-sizing: border-box;
+}
+ 
+.editResume{
+    margin: 10px 200px;
+}
+
+#resumeBody{
+    box-sizing: border-box;
+    margin: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.user-name{
+    font-size: 34px;
+    font-weight: bolder;
+}
+
+.firstBlock{
+    font-size: 16px;
+    text-align: left;
+    padding: 2px;
+}
+
+.res-h2{
+    font-size: 28px;
+    font-weight: bolder;
+    
+}
+
+
+
+.user-role{
+    color: rgb(122, 122, 243);
+    font-size: 20px;
+}
+
+.user-contacts{
+    display: flex;
+   justify-content: left;
+   font-size: 16px;
+   margin: 10px ;
+   gap: 12px
+}
+
+/* .user-experience{
+    line-height: 0.5;
+} */
+
+.headings{
+    font-size: 20px;
+    text-align: left;
+    margin: 10px 1px;
+    font-weight: 700;
+    /* border-bottom: 2.5px solid #000; */
+    border-bottom: 2px solid black;
+}
+
+.exp1{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 80% 20%;
+}
+
+.para1{
+    font-size: 18px;
+}
+
+.para2{
+    font-size: 16px;
+}
+
+.remove-btn{
+    margin: 5px;
+}
+
+.para3{
+    font-size: 15px;
+}
+
+div[contenteditable]:focus {
+    background-color: #e7f1ff;
+    outline: none;
+  }
+
+/* .user-phone{
+    display: flex;
+    gap: 5px;
+    
+} */
+
+@media only screen and (max-width: 1051px){
+
+    .editResume{
+        margin: 0.1px 10px;
+    }
+    
+    #resumeBody{
+        box-sizing: border-box;
+        margin: 1px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 5px;
+        border-radius: 5px;
+    }
+    
+    
+}
