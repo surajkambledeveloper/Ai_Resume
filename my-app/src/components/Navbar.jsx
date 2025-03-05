@@ -5,11 +5,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Dummy navigation function (if needed) - otherwise, you can rely on <a href="...">
-  // const navigateTo = (url) => {
-  //   window.location.href = url;
-  // };
-
   return (
     <nav className="bg-gray-800 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4">

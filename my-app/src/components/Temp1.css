@@ -3,12 +3,12 @@
 }
  
 .editResume{
-    margin: 10px 200px;
+    margin: 20px 10px;
+    
 }
 
 #resumeBody{
     box-sizing: border-box;
-    margin: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
     border-radius: 8px;
@@ -69,7 +69,7 @@
     font-size: 18px;
 }
 
-.para2{
+.para2, .para4{
     font-size: 16px;
 }
 
@@ -77,7 +77,7 @@
     margin: 5px;
 }
 
-.para3{
+.para3, .para5{
     font-size: 15px;
 }
 
@@ -92,19 +92,85 @@ div[contenteditable]:focus {
     
 } */
 
-@media only screen and (max-width: 1051px){
+@media only screen and (max-width: 776px){
+
 
     .editResume{
-        margin: 0.1px 10px;
+        margin: 30px 0px;
     }
     
     #resumeBody{
         box-sizing: border-box;
-        margin: 1px;
+        margin: 30px 10px;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         padding: 5px;
         border-radius: 5px;
+        min-width: 380px;
     }
     
+    .user-name{
+        font-size: 20px;
+    }
+
+
+    .user-role{
+        font-size: 15px;
+    }
+
+    .user-contacts{
+        font-size: 10px;
+    }
+
+    .headings{
+        font-size: 18px;
+    }
+
+    .user-summary{
+        font-size:13px;
+    }
+
+    .remove-section-btn{
+        font-size: 10px;
+    }
+
+    .remove-btn{
+        font-size: 10px;
+    }
+
+    .add-btn{
+        font-size: 10px;
+    }
+
+    .exp1{
+        font-size: 10px;
+    }
+
+    .user-experience{
+        font-size: 13px;
+    }
+
+    .para1{
+        font-size: 13px;
+    }
+
+    .para2{
+        font-size: 12px;
+    }
+
+    .para3{
+        font-size: 11px;
+    }
+
+    .para5{
+        font-size: 12px;
+    }
+
+    .para4{
+        font-size: 13px;
+    }
+
+    .skillsblock{
+        font-size: 13px;
+    }
     
 }

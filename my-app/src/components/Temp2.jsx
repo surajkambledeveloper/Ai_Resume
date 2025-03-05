@@ -8,6 +8,8 @@ import { faPhone, faEnvelope, faMapMarkerAlt } from '@fortawesome/free-solid-svg
 
 const Temp2 = () => {
     const [showButtons, setShowButtons] = useState(true);
+    const [loading, setLoading] = useState(false);
+
     const [resume, setResume] = useState({
         name: "Your Name",
         role: "The role you are applying for?",
@@ -74,13 +76,13 @@ const Temp2 = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const sections = [
-      "Summary",
-      "Experience",
-      "Education",
-      "Skills",
-      "Projects",
-      "Certifications",
-      "Achievements",
+        "Summary",
+        "Experience",
+        "Education",
+        "Skills",
+        "Projects",
+        "Certifications",
+        "Achievements",
     ];
 
 
@@ -88,6 +90,59 @@ const Temp2 = () => {
     const removeBlock = (block) => {
         setVisibleSections({ ...visibleSections, [block]: false });
     };
+
+    
+
+    const handleUserContent = (section, key, value, index = null) => {
+        const updatedResume = { ...resume };
+        if (Array.isArray(updatedResume[section])) {
+            if (index !== null) updatedResume[section][index][key] = value;
+        } else {
+            updatedResume[section] = value;
+        }
+        setResume(updatedResume);
+    };
+
+    const addNewEntry = (section) => {
+        const updatedResume = { ...resume };
+        const newEntry = section === "experience" ? {
+            title: 'Your Title',
+            companyName: 'Company Name',
+            date: 'Date',
+            companyLocation: 'Company Location',
+            description: 'Company Description. Like- web development company specializes in creating innovative, user-centric digital solutions that elevate brands and businesses. We offer end-to-end services including custom website development, e-commerce solutions, and mobile-responsive designs, ensuring seamless user experiences across all platforms. Leveraging the latest technologies like React, Node.js, and modern design principles, our team is committed to delivering ',
+            accomplishment: 'Your accomplishment. Like-In their time at the web development company, this individual has consistently demonstrated exceptional technical skills and leadership, contributing significantly to the successful delivery of numerous high-profile projects. They played a pivotal role in developing scalable, user-friendly web applications, '
+        } : section === "education" ? {
+            degree: 'Degree and Field of Study. Like- Btech/Information Technology',
+            institution: 'School or University',
+            duration: 'Date Period',
+            grade: "grade or percentage like GPA:8.5"
+        } :
+            section === "certifications" ? {
+                certificates: 'Course Name',
+                link: 'link of your certificate'
+            } :
+                section === "projects" ? {
+                    pname: 'Project Name',
+                    pdate: 'Date period',
+                    psummary: 'Summary of your work.A weather app built with React allows users to view real-time weather information. It fetches data from APIs, displaying current temperature, humidity, and forecasts. React components manage state and UI updates, while hooks like useState and useEffect handle data fetching and UI rendering efficiently.'
+                } : {
+                    keyAchievements: 'Your Achievement',
+                    describe: "Describe what you did"
+                };
+
+        updatedResume[section].push(newEntry);
+        setResume(updatedResume);
+    };
+
+    // Remove Entry Function
+    const removeEntry = (section, index) => {
+        const updatedResume = { ...resume };
+        updatedResume[section].splice(index, 1); // Remove the item at the specified index
+        setResume(updatedResume);
+    };
+
+
 
     const downloadPdf = async () => {
         // Select buttons to hide
@@ -232,109 +287,212 @@ const Temp2 = () => {
 
 
 
-    const handleUserContent = (section, key, value, index = null) => {
-        const updatedResume = { ...resume };
-        if (Array.isArray(updatedResume[section])) {
-            if (index !== null) updatedResume[section][index][key] = value;
-        } else {
-            updatedResume[section] = value;
-        }
-        setResume(updatedResume);
-    };
+// const resumeRef = useRef(null);
+  
+//   const handleAIEnhancement = async () => {
+//     if (!resumeData._id) {
+//       await createResume();
+//       alert("Resume created. Click AI Assistant again.");
+//       return;
+//     }
+//     setLoading(true); // Start loading
+//     setShowEnhancementOptions(true);
+//     setLoading(false); // End loading (remove this line if you want to show loading during the enhancement options display)
+//   };
 
 
-    const addNewEntry = (section) => {
-        const updatedResume = { ...resume };
-        const newEntry = section === "experience" ? {
-            title: 'Your Title',
-            companyName: 'Company Name',
-            date: 'Date',
-            companyLocation: 'Company Location',
-            description: 'Company Description. Like- web development company specializes in creating innovative, user-centric digital solutions that elevate brands and businesses. We offer end-to-end services including custom website development, e-commerce solutions, and mobile-responsive designs, ensuring seamless user experiences across all platforms. Leveraging the latest technologies like React, Node.js, and modern design principles, our team is committed to delivering ',
-            accomplishment: 'Your accomplishment. Like-In their time at the web development company, this individual has consistently demonstrated exceptional technical skills and leadership, contributing significantly to the successful delivery of numerous high-profile projects. They played a pivotal role in developing scalable, user-friendly web applications, '
-        } : section === "education" ? {
-            degree: 'Degree and Field of Study. Like- Btech/Information Technology',
-            institution: 'School or University',
-            duration: 'Date Period',
-            grade: "grade or percentage like GPA:8.5"
-        } :
-            section === "certifications" ? {
-                certificates: 'Course Name',
-                link: 'link of your certificate'
-            } :
-                section === "projects" ? {
-                    pname: 'Project Name',
-                    pdate: 'Date period',
-                    psummary: 'Summary of your work.A weather app built with React allows users to view real-time weather information. It fetches data from APIs, displaying current temperature, humidity, and forecasts. React components manage state and UI updates, while hooks like useState and useEffect handle data fetching and UI rendering efficiently.'
-                } : {
-                    keyAchievements: 'Your Achievement',
-                    describe: "Describe what you did"
-                };
+    
+    
+    
+    // const downloadPDF = async () => {
+    //     try {
+    //       setLoading(true);
+      
+    //       // Send API request to generate PDF
+    //       const response = await axios.post(
+    //         "http://localhost:5000/api/resume/generate-pdf",
+    //         { resumeData },
+    //         {
+    //           responseType: "blob",  // Ensures response is treated as a file
+    //           headers: { "Content-Type": "application/json" }
+    //         }
+    //       );
+      
+    //       // Validate Blob response
+    //       if (!response || !response.data || !(response.data instanceof Blob)) {
+    //         throw new Error("Invalid PDF response");
+    //       }
+      
+    //       // Create and trigger download
+    //       const url = window.URL.createObjectURL(response.data);
+    //       const link = document.createElement("a");
+    //       link.href = url;
+    //       link.setAttribute("download", `resume_${Date.now()}.pdf`);
+    //       document.body.appendChild(link);
+    //       link.click();
+      
+    //       // Cleanup
+    //       setTimeout(() => {
+    //         document.body.removeChild(link);
+    //         window.URL.revokeObjectURL(url);
+    //         setLoading(false);
+    //       }, 100);
+      
+    //     } catch (error) {
+    //       console.error("Download failed:", error);
+    //       alert("PDF generation failed. Please check your resume data.");
+    //       setLoading(false);
+    //     }
+    //   };
+      
+      
+    //   const handleSectionHover = (section) => {
+    //     setHoveredSection(section);
+    //   };
+      
+    //   const handleSectionLeave = () => {
+    //     setHoveredSection(null);
+    //   };
+      
+    //   const handleSectionClick = (section) => {
+    //     setActiveSection(section === activeSection ? null : section);
+    //   };
+      
+    //   const handleSettingChange = (section, key) => {
+    //     setSectionSettings((prevSettings) => ({
+    //       ...prevSettings,
+    //       [section]: {
+    //         ...prevSettings[section],
+    //         [key]: !prevSettings[section][key],
+    //       },
+    //     }));
+    //   };
+    
+    //   const createResume = async () => {
+    //     try {
+    //         const response = await axios.post('http://localhost:5000/api/resume/create', { resumeData });
+    
+    //         if (response.data?.data?._id) {
+    //             setResumeData(prev => ({ ...prev, _id: response.data.data._id }));
+    //             alert("✅ Resume created successfully!");
+    //         } else {
+    //             console.error("❌ No _id returned from server:", response.data);
+    //         }
+    //     } catch (error) {
+    //         console.error("❌ Resume Creation Error:", error.response ? error.response.data : error.message);
+    //     }
+    // };
+    
+    //   const saveResume = async () => {
+    //     if (!resumeData) {
+    //       alert("No resume data to save!");
+    //       return;
+    //     }
+    //     try {
+    //       const response = await axios.post("http://localhost:5000/api/resume/save", {
+    //         resumeData
+    //     });
+    //       if (response.data) {
+    //         alert("Resume saved successfully!");
+    //         console.log("✅ Resume saved:", response.data);
+    //       }
+    //     } catch (error) {
+    //       console.error("❌ Error saving resume:", error);
+    //       alert("Failed to save resume.");
+    //     }
+    //   };
+    
+    //   const enhanceSingleField = async (field) => {
+    //     if (!resumeData._id) {
+    //         alert("Please save your resume before enhancing a field.");
+    //         return;
+    //     }
+    //     try {
+    //         setLoading(true); // Start loading
+    //         console.log("Enhancing field:", field, "with resume ID:", resumeData._id);
+    //         const response = await axios.post('http://localhost:5000/api/resume/enhanceField', { resumeId: resumeData._id, field });
+    
+    //         if (response.data?.data) {
+    //             setResumeData(response.data.data);
+    //             alert(`${field} enhanced successfully!`);
+    //         }
+    //     } catch (error) {
+    //         console.error(`Error enhancing ${field}:`, error);
+    //     } finally {
+    //         setLoading(false); // End loading
+    //     }
+    // };
+    
 
-        updatedResume[section].push(newEntry);
-        setResume(updatedResume);
-    };
 
-    // Remove Entry Function
-    const removeEntry = (section, index) => {
-        const updatedResume = { ...resume };
-        updatedResume[section].splice(index, 1); // Remove the item at the specified index
-        setResume(updatedResume);
-    };
+
 
 
     return (
-        <div className="mainbody">
-            <div className="flex flex-wrap gap-3 sm:gap-5 my-3 justify-center">
-                <button
-                    onClick={downloadPdf}
-                    className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg shadow-md transition duration-300 ease-in-out  sm:w-auto"
-                >
-                    Download PDF
+        <div className="flex gap-4 main">
+
+            <div className="hidden md:block w-1/6 bg-gray-800 text-white p-4 min-h-screen">
+                <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors" >
+
+                    🤖 AI Assistant
                 </button>
-
-
-
-
-                <div className="relative inline-block">
-                    {/* Dropdown Button */}
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out w-full sm:w-auto"
-                    >
-                        Enhance with AI ▼
-                    </button>
-
-                    {/* Dropdown Menu (No Functionality) */}
-                    {isOpen && (
-                        <div className="absolute mt-2 bg-white border rounded-lg shadow-lg w-48 z-10">
-                            {sections.map((section, index) => (
-                                <div
-                                    key={index}
-                                    className="block w-full text-left px-4 py-2 hover:bg-gray-200 transition duration-200"
-                                >
-                                    {section}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-            
-
-                <button
-                    // onClick={createResume}
-                    className="bg-purple-600 cursor-pointer hover:bg-purple-700 text-white font-semibold py-2 px-4 sm:px-2 rounded-lg shadow-md transition duration-300 ease-in-out  sm:w-auto"
-                >
-                    Create Resume
+               {/* {showEnhancementOptions && (
+          <div className="ai-field-enhancement">
+            <h4>Enhance Specific Field</h4>
+            <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors" onClick={() => enhanceSingleField("summary")}>
+              Enhance Summary
+            </button>
+            <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors" onClick={() => enhanceSingleField("skills")}>
+              Enhance Skills
+            </button>
+            <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors" onClick={() => enhanceSingleField("experience")}>
+              Enhance Experience
+            </button>
+            <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors" onClick={() => enhanceSingleField("achievements")}>
+              Enhance Achievements
+            </button>
+            <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors" onClick={() => enhanceSingleField("courses")}>
+              Enhance Courses
+            </button>
+            <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors" onClick={() => enhanceSingleField("projects")}>
+              Enhance Projects
+            </button>
+          </div>
+        )} */}
+                <button className="w-full bg-blue-500 text-white p-2 mb-2 rounded hover:bg-blue-600 transition-colors" >
+                    Save Resume
+                </button>
+                <button className="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 transition-colors"
+                    onClick={downloadPdf}>
+                    ⬇️ Download
                 </button>
             </div>
 
+            {/* Mobile Menu */}
+            <div className="md:hidden fixed left-4 right-2 z-50">
+                <button
+                    className=" bg-gray-800 text-white p-3 rounded "
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    ☰ Menu
+                </button>
 
-
-
-
-            <div className="editResume">
+                {/* Dropdown Menu */}
+                {isOpen && (
+                    <div className="absolute left-0 right-0 bg-gray-800 p-2 rounded shadow-lg mt-2">
+                        <button className="w-full bg-gray-700 text-white p-2 mb-2 rounded hover:bg-gray-600 transition-colors">
+                            🤖 AI Assistant
+                        </button>
+                        <button className="w-full bg-blue-500 text-white p-2 mb-2 rounded hover:bg-blue-600 transition-colors">
+                            Save Resume
+                        </button>
+                        <button className="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 transition-colors">
+                            ⬇️ Download
+                        </button>
+                    </div>
+                )}
+            </div>
+            <div className="editResume w-6/7 bg-white p-4 ml-24"  >
                 <div id="resumeBody">
                     <div className="firstBlock"
                         contentEditable
@@ -542,13 +700,13 @@ const Temp2 = () => {
                             <div className="achievementblock">
                                 <h3 className="headings">Key Achievements</h3>
                                 {resume.achievements.map((ach, idx) => (
-                                    <div key={idx} className="user-education">
+                                    <div key={idx} className="user-achievements">
                                         <div
                                             contentEditable
                                             suppressContentEditableWarning
                                             onBlur={(e) => handleUserContent("achievements", "keyAchievements", e.target.textContent, idx)}
                                         >
-                                            <p className='para2'>{ach.keyAchievements}</p>
+                                            <p className='para4'>{ach.keyAchievements}</p>
                                         </div>
 
                                         <div
@@ -556,7 +714,7 @@ const Temp2 = () => {
                                             suppressContentEditableWarning
                                             onBlur={(e) => handleUserContent("achievements", "describe", e.target.textContent, idx)}
                                         >
-                                            <p className='para3'>{ach.describe}</p>
+                                            <p className='para5 '>{ach.describe}</p>
                                         </div>
                                         {resume.achievements.length > 1 && (
                                             <button onClick={() => removeEntry("achievements", idx)} className="remove-btn bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg shadow-md transition duration-300 ease-in-out  sm:w-auto">

@@ -106,7 +106,7 @@ const Home = () => {
                 className={`px-6 py-3 cursor-pointer bg-emerald-500 text-white font-medium rounded-md hover:bg-emerald-600 transition-all duration-300 transform hover:scale-105 ${
                   animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
-                onClick={() => navigateTo('/templatepage')}
+                onClick={() => navigateTo('/templatepage1')}
               >
                 Build an ATS-Friendly Resume
               </button>

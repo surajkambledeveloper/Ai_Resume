@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-*{
+/* *{
     background-color:white;
-  }
+  } */
   
   [contentEditable] {
     outline: none;
@@ -14,7 +14,9 @@
   }
   /* Loader Overlay */
   .loader-overlay {
-    @apply fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50;
+    /* @apply fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50; */
+    @apply fixed inset-0 flex justify-center items-center bg-black/50 z-50;
+
   }
   
   /* Loader Animation */

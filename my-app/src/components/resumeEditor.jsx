@@ -698,7 +698,8 @@ const ResumeEditor = () => {
                         {course.title}
                       </h3>
                       <p
-                        contentEditable
+                          contentEditable      suppressContentEditableWarning
+                        
                         onBlur={(e) => handleInputChange('courses', 'description', e.target.textContent, idx)}
                         className="text-sm text-gray-700"
                       >
