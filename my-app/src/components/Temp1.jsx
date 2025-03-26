@@ -217,57 +217,6 @@ const Temp1 = () => {
         }
     };
 
-    // Enhance resume with AI
-    // const enhanceResumeWithAI = async () => {
-    //   if (!resume._id) {
-    //     alert("Please save your resume before enhancing it.");
-    //     return;
-    //   }
-
-    //   try {
-    //     const response = await axios.post('http://localhost:5000/api/resume/enhance', {
-    //       resumeId: resume._id,
-    //     });
-
-    //     console.log("🟢 AI Enhanced Response:", response.data);
-
-    //     if (response.data?.data) {
-    //       setResume(prev => ({
-    //         ...prev,
-    //         summary: response.data.data.summary || prev.summary,
-    //         experience: response.data.data.experience?.length ? response.data.data.experience : prev.experience,
-    //         skills: response.data.data.skills?.length ? response.data.data.skills : prev.skills,
-    //         achievements: response.data.data.achievements?.length ? response.data.data.achievements : prev.achievements,
-    //         certifications: response.data.data.certifications?.length ? response.data.data.certifications : prev.certifications,
-    //         projects: response.data.data.projects?.length ? response.data.data.projects : prev.projects,
-    //       }));
-    //       setIsEnhanced(true);
-    //       alert("Resume enhanced successfully!");
-    //     } else {
-    //       console.warn("❌ AI Enhancement Failed: No data received");
-    //     }
-    //   } catch (error) {
-    //     console.error("❌ Error enhancing resume:", error);
-    //   }
-    // };
-
-    // // Save resume
-    // const saveResume = async () => {
-    //   try {
-    //     const response = await axios.post('http://localhost:5000/api/resume/save', {
-    //       resumeData: resume,
-    //     });
-
-    //     if (response.data?.data?._id) {
-    //       setResume(prev => ({ ...prev, _id: response.data.data._id }));
-    //       alert("Resume saved successfully!");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error saving resume:", error);
-    //   }
-    // };
-
-
     const saveAndEnhanceResume = async () => {
         if (!resume) {
             alert("Please provide your resume details first.");
@@ -349,9 +298,6 @@ const Temp1 = () => {
 
     return (
         <div className="mainbody">
-
-
-
   {showButtons && (
     <div className="flex flex-wrap gap-3 sm:gap-5 my-3 justify-center">
       <button 
@@ -381,14 +327,6 @@ const Temp1 = () => {
       </button>
     </div>
   )}
-
-
-
-
-
-
-
-
 
             <div className="editResume">
                 <div id="resumeBody">

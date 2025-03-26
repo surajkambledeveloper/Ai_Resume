@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import temp1 from '../images/temp1.png';
+import temp2 from '../images/temp2.png';
+import Temp3 from '../images/Temp3.jpg';
+import temp4 from '../images/temp4.png';
+import temp5 from '../images/temp5.jpg';
+import temp6 from '../images/temp6.png';
+import temp7 from '../images/temp7.png';
 
 const WithoutAiTemp = ({ setActiveStep }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -17,16 +23,44 @@ const WithoutAiTemp = ({ setActiveStep }) => {
     {
       id: 2,
       name: 'Creative',
-      preview: 'https://cdn.enhancv.com/predefined-examples/OWMJYjIA657eHTyP8VzUVFluBa69VsJEvlwYdDk6/image.png',
+      preview: temp2,
       description: 'Stand out with unique flair and personality',
       url: '/temp2'
     },
     {
       id: 3,
       name: 'Modern',
-      preview: 'https://cdn.enhancv.com/modern_stylish_double_column_resume_template_9178099ddc.png',
+      preview: Temp3,
       description: 'Clean, contemporary design for the digital age',
       url: '/temp3'
+    },
+    {
+      id: 4,
+      name: 'Modern',
+      preview: temp4,
+      description: 'Clean, contemporary design for the digital age',
+      url: '/temp4'
+    },
+    {
+      id: 5,
+      name: 'Tech Professional',
+      preview: temp5,
+      description: 'Sleek design for full-stack developers and tech experts',
+      url: '/Temp5'
+    },
+    {
+      id: 6,
+      name: 'Tech Leader',
+      preview: temp6,
+      description: 'Professional design tailored for senior tech experts and team leaders',
+      url: '/Temp6'
+    },
+    {
+      id: 7,
+      name: 'Design Innovator',
+      preview: temp7,
+      description: 'Vibrant layout for graphic designers showcasing creative excellence',
+      url: '/Temp7'
     }
   ];
 

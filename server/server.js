@@ -6,7 +6,12 @@ const path = require("path");
 const connectToMongo = require("./config/resumedb");
 const { errorHandler } = require("./utils/errorHandler");
 const resumeRoutes = require("./routes/resumeRoutes");
-
+const resumeRoutes1 = require("./routes/resumeRoutes1");
+const routerTemp3 = require("./routes/resumeRoutesTemp3");
+const temp4Routes = require("./routes/temp4Routes");
+const temp5Routes = require("./routes/temp5Routes");
+const temp6Routes = require("./routes/temp6Routes");
+const authRoutes = require('./routes/auth');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -20,9 +25,14 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "public")));
 
-// ✅ Register Resume Routes
+// ✅ Register Resume Routes with distinct paths
 app.use("/api/resume", resumeRoutes);
-
+app.use("/api/resume1", resumeRoutes1);
+app.use("/api/temp3", routerTemp3);
+app.use("/api/temp4", temp4Routes);
+app.use("/api/temp5", temp5Routes); 
+app.use("/api/resume6", temp6Routes);
+app.use('/api/auth', authRoutes);
 // Health check route
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok", message: "Server is running" });

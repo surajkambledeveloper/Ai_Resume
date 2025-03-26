@@ -26,19 +26,13 @@ const Navbar = () => {
                 Home
               </Link>
               <Link
-                to="/about" 
+                to="/Signup" 
                 className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
               >
-                About
+                SignUp
               </Link>
               <a 
-                href="#resume" 
-                className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Resume
-              </a>
-              <a 
-                href="#login" 
+                href="/login" 
                 className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
               >
                 SignIn
