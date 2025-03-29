@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const axios = require("axios");
 const Resume = require('../models/Resume.model');
@@ -281,21 +280,23 @@ const resumeCSS = () => {
       padding: 0;
       box-sizing: border-box;
     }
-    
-    body {
+
+    html, body {
+      margin: 0;
+      padding: 5px;
+      width: 100%;
+      height: 100%;
       font-family: Arial, sans-serif;
       font-size: 14px;
       line-height: 1.5;
-      padding: 20px;
-      width: 100%;
-      height: 100%;
+      background-color: #fff;
     }
 
     #resumeBody {
       width: 100%;
       max-width: 100%;
+      margin: 0;
       padding: 20px;
-      margin: 0 auto;
       background-color: #fff;
     }
 
@@ -348,10 +349,11 @@ const resumeCSS = () => {
 
     @page {
       size: A4;
-      margin: 20mm;
+      margin: 0;
     }
   `;
 };
+
   
 
 // ✅ Function to generate HTML from resumeData (Corrected)
@@ -505,18 +507,21 @@ const generatePDF = async (req, res) => {
     const page = await browser.newPage();
     const htmlContent = generateHTML(resumeData);
 
-    await page.setContent(htmlContent, { waitUntil: "networkidle0", timeout: 30000 });
+    await page.setContent(htmlContent, {
+      waitUntil: "networkidle0",
+      timeout: 30000,
+    });
 
     const pdfBuffer = await page.pdf({
       format: "A4",
       printBackground: true,
       margin: {
-        top: "2mm",
-        right: "2mm",
-        bottom: "2mm",
-        left: "2mm",
+        top: "0mm",
+        right: "0mm",
+        bottom: "0mm",
+        left: "0mm",
       },
-      scale: 0.95,  // Adjust scale for better fit
+      scale: 1.0, // Full size
     });
 
     await browser.close();
@@ -530,7 +535,10 @@ const generatePDF = async (req, res) => {
     res.end(pdfBuffer);
   } catch (error) {
     console.error("❌ PDF Generation Error:", error);
-    res.status(500).json({ message: "PDF generation failed", error: error.message });
+    res.status(500).json({
+      message: "PDF generation failed",
+      error: error.message,
+    });
   }
 };
 
