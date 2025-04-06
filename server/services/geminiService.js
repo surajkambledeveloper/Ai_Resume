@@ -1,5 +1,5 @@
-// import axios from "axios";
-// import dotenv from "dotenv";
+//import axios from "axios";
+//import dotenv from "dotenv";
 const axios = require("axios");
 const dotenv = require("dotenv");
 
@@ -88,4 +88,4 @@ Now, generate the improved profile summary:`;
   }
 };
 
-module.exports = enhanceWithGemini;
+module.exports = { enhanceWithGemini };

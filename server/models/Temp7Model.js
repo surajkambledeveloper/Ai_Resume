@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const resumeSchema = new mongoose.Schema(
@@ -13,7 +14,8 @@ const resumeSchema = new mongoose.Schema(
       {
         title: { type: String },
         companyName: { type: String },
-        date: { type: String },
+        Startdate: { type: String },
+        end_data: {type: String},
         companyLocation: { type: String },
         description: { type: String },
         accomplishment: { type: String },
@@ -36,7 +38,9 @@ const resumeSchema = new mongoose.Schema(
     courses: [
       {
         title: { type: String },
-        description: { type: String },
+        platform: {type: String},
+        institution: {type: String},
+        description: { type: String }
       },
     ],
     skills: { type: [String], default: [] },
@@ -45,12 +49,16 @@ const resumeSchema = new mongoose.Schema(
         title: { type: String },
         description: { type: String },
         duration: { type: String },
-        
       },
+    ],
+    certifications: [
+      {
+        certificates: String,
+        link: String,
+      }
     ]
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.models.Resume || mongoose.model("Resume", resumeSchema);
-
+module.exports = mongoose.model("Temp7Resume", resumeSchema);

@@ -7,7 +7,8 @@ import temp4 from '../images/temp4.png';
 import temp5 from '../images/temp5.jpg';
 import temp6 from '../images/temp6.png';
 import temp7 from '../images/temp7.png';
-
+import temp8 from '../images/temp8.jpg';
+import temp9 from '../images/temp9.jpg';
 const WithoutAiTemp = ({ setActiveStep }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [hoveredTemplate, setHoveredTemplate] = useState(null);
@@ -61,6 +62,20 @@ const WithoutAiTemp = ({ setActiveStep }) => {
       preview: temp7,
       description: 'Vibrant layout for graphic designers showcasing creative excellence',
       url: '/Temp7'
+    },
+    {
+      id: 8,
+      name: 'Design Innovator',
+      preview: temp8,
+      description: 'Vibrant layout for graphic designers showcasing creative excellence',
+      url: '/Temp8'
+    },
+    {
+      id: 9,
+      name: 'Design Innovator',
+      preview: temp9,
+      description: 'Vibrant layout for graphic designers showcasing creative excellence',
+      url: '/Temp9'
     }
   ];
 

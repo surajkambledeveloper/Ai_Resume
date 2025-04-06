@@ -11,6 +11,9 @@ const routerTemp3 = require("./routes/resumeRoutesTemp3");
 const temp4Routes = require("./routes/temp4Routes");
 const temp5Routes = require("./routes/temp5Routes");
 const temp6Routes = require("./routes/temp6Routes");
+const temp7Routes = require("./routes/temp7Routes");
+const temp8Routes = require("./routes/temp8Routes");
+const temp9Routes = require("./routes/temp9Routes");
 const authRoutes = require('./routes/auth');
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,7 +35,12 @@ app.use("/api/temp3", routerTemp3);
 app.use("/api/temp4", temp4Routes);
 app.use("/api/temp5", temp5Routes); 
 app.use("/api/resume6", temp6Routes);
+app.use("/api/resume7", temp7Routes);
 app.use('/api/auth', authRoutes);
+app.use("/api/resume8", temp8Routes);
+app.use("/api/resume9", temp9Routes);
+
+
 // Health check route
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok", message: "Server is running" });

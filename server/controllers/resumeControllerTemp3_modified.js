@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const { enhanceWithGemini } = require('../services/geminiService.js');
+const enhanceWithGemini = require("../services/geminiService.js");
 const ResumeTemp3 = require("../models/resumeModel.js");
 
 const enhanceResume = async (req, res) => {
@@ -154,5 +154,9 @@ const getResume = async (req, res) => {
   }
 };
 
-
-module.exports = {getResume, enhanceResume, handleGeneratePdf, saveResume} ;
+module.exports = {
+  getResume,
+  enhanceResume,
+  handleGeneratePdf,
+  saveResume,
+};

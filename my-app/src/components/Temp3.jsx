@@ -1031,41 +1031,48 @@ export default function Temp3() {
       </div>
 
       <style jsx>{`
-        .main-content {
-          width: 100%;
-          transition: margin-left 0.3s ease-in-out;
-          padding: 1rem; /* Base padding for mobile */
-        }
+  .main-content {
+    width: 100%;
+    transition: margin-left 0.3s ease-in-out;
+    padding: 1rem; /* Base padding for mobile */
+    font-size: 12pt; /* Standard ATS-friendly font size */
+  }
 
-        @media (max-width: 1023px) {
-          .main-content {
-            margin-left: 0 !important; /* No offset on mobile when sidebar is hidden */
-            padding: 1rem;
-          }
-          .max-w-4xl {
-            max-width: 100%;
-          }
-          .text-center {
-            text-align: left !important; /* Left-align text on mobile */
-          }
-          .flex {
-            flex-direction: column !important; /* Stack items vertically on mobile */
-          }
-        }
+  h1, h2, h3 {
+    font-size: 14pt; /* Standard ATS-friendly heading size */
+    font-weight: bold;
+  }
 
-        @media (min-width: 1024px) {
-          .main-content {
-            margin-left: 16rem !important; /* Matches sidebar width (w-64 = 16rem) */
-            padding: 2rem; /* Larger padding on desktop */
-          }
-        }
+  @media (max-width: 1023px) {
+    .main-content {
+      margin-left: 0 !important; /* No offset on mobile when sidebar is hidden */
+      padding: 1rem;
+    }
+    .max-w-4xl {
+      max-width: 100%;
+    }
+    .text-center {
+      text-align: left !important; /* Left-align text on mobile */
+    }
+    .flex {
+      flex-direction: column !important; /* Stack items vertically on mobile */
+    }
+  }
 
-        @media print {
-          .no-print {
-            display: none;
-          }
-        }
-      `}</style>
-    </div>
-  );
+  @media (min-width: 1024px) {
+    .main-content {
+      margin-left: 16rem !important; /* Matches sidebar width (w-64 = 16rem) */
+      padding: 2rem; /* Larger padding on desktop */
+    }
+  }
+
+  @media print {
+    .no-print {
+      display: none;
+    }
+  }
+`}</style>
+</div>
+);
 }
+
