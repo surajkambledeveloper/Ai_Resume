@@ -216,7 +216,7 @@ const ResumeEditor = () => {
     const newItem =
       {
         experience: {
-          title: 'New Position',
+          title: 'Sura Position',
           companyName: 'Company Name',
           date: '2023 - Present',
           companyLocation: 'City, State, Country',

@@ -1,15 +1,23 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Resume from './resume.png'
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   // Dummy animate variable; adjust as needed.
   const animate = true;
 
-  // Dummy navigation function for hero buttons.
+  // // Dummy navigation function for hero buttons.
+  // const navigateTo = (url) => {
+  //   window.location.href = url;
+  // };
+  const navigate = useNavigate();
+
   const navigateTo = (url) => {
-    window.location.href = url;
+    navigate(url);
   };
+
+  
 
   return (
     <div className="min-h-screen bg-white font-sans">

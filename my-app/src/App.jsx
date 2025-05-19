@@ -10,7 +10,7 @@ import Temp3 from './components/Temp3';
 import Temp5 from './components/Temp5';
 import Temp6 from './components/Temp6';
 import Temp7 from './components/Temp7';
-import { Temp8 } from "./components/Temp8"; // Named import
+import  {Temp8}  from "./components/Temp8"; // Named import
 import Temp9 from './components/Temp9';
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -20,6 +20,9 @@ import Sidebar2 from './components/Sidebar2';
 import ResumeEditorModern from './components/ResumeEditorModern';
 import PrintableResume from "./components/PrintableResume";
 import PasswordReset from './components/PasswordReset';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
  
 
@@ -49,6 +52,19 @@ function App() {
         </Routes>
       
       </Router>
+     {/* <ToastContainer /> */}
+     <ToastContainer 
+        position="top-right" 
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        // theme="colored"
+      />
 
     </>
   )

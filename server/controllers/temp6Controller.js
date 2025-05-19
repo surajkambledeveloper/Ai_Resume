@@ -13,7 +13,8 @@ const saveResume = async (req, res) => {
 
     if (_id) {
       savedResume = await ResumeEditorModern.findByIdAndUpdate(_id, resumeData, { new: true });
-      if (!savedResume) return res.status(404).json({ message: "Resume not found for update" });
+      if (!savedResume)
+         return res.status(404).json({ message: "Resume not found for update" });
     } else {
       const newResume = new ResumeEditorModern(resumeData);
       savedResume = await newResume.save();

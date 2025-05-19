@@ -102,6 +102,7 @@ const Temp6 = () => {
     try {
       setLoading(true);
       let payload = { resumeId: formData._id, field };
+      console.log(payload)
       if (field === 'experience') {
         payload.data = formData.experience.map(exp => exp.achievements);
       } else {
@@ -115,6 +116,7 @@ const Temp6 = () => {
             experience: response.data.data.experience,
             _id: response.data.data._id
           }));
+          
         } else {
           setFormData(prev => ({
             ...prev,
@@ -192,6 +194,8 @@ const Temp6 = () => {
           </div>
         );
       case 'summary':
+
+
         return (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Professional Summary</label>
@@ -210,6 +214,7 @@ const Temp6 = () => {
           </div>
         );
       case 'experience':
+
         return (
           <div className="space-y-6">
             {formData.experience.map((exp, index) => (

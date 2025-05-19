@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
 import {
   fetchResume, // ✅ Fetches resume data from backend
@@ -12,6 +13,8 @@ import {
   enhanceResumeSection, // ✅ Enhances sections using AI
   downloadResumePDF, // ✅ Generates a PDF using Puppeteer
 } from "./services/api.js";
+import { summary } from "framer-motion/client";
+import { toast } from 'react-toastify';
 
 export const Temp8 = () => {
   const [resumeData, setResumeData] = useState({
@@ -103,54 +106,6 @@ export const Temp8 = () => {
 
   const resumeRef = useRef(null);
   const [isMounted, setIsMounted] = useState(true); // Flag to track if component is mounted
-
-  useEffect(() => {
-    setIsMounted(true);
-
-    async function fetchData() {
-      try {
-        const data = await fetchResume();
-        console.log("Fetched data:", data); // Debugging
-        if (isMounted) {
-          if (data) {
-            setResumeData(data); // Update state with valid data
-            console.log("✅ Resume data successfully fetched and set.");
-          } else {
-            console.error("❌ Resume data is null or invalid:", data);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
-    return () => {
-      setIsMounted(false);
-    };
-  }, []); // ✅ Run only on mount
-
-  const handleSave = async () => {
-    try {
-      console.log("Saving resume data:", resumeData); // Log the data being sent
-
-      await saveResume(resumeData); // ✅ Save data when user clicks save
-      alert("Resume saved successfully!");
-    } catch (error) {
-      console.error("❌ Error saving resume:", error);
-      alert("Failed to save resume.");
-    } finally {
-    }
-  };
-  const throttle = (func, limit) => {
-    let inThrottle;
-    return (...args) => {
-      if (!inThrottle) {
-        func(...args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
-    };
-  };
 
   const handleInputChange = useCallback(
     (section, field, value, index = null) => {
@@ -258,6 +213,7 @@ export const Temp8 = () => {
       a.download = "resume.pdf"; // ✅ Set download filename
       document.body.appendChild(a);
       a.click();
+
       document.body.removeChild(a);
     } else {
       alert("Failed to generate PDF.");
@@ -331,166 +287,87 @@ export const Temp8 = () => {
     [sectionsOrder]
   );
 
-  // const handleAIEnhancement = async (section) => {
-  //   let isMounted = true;
-
-  //   setIsLoading(true);
-
-  //   try {
-  //     let sectionData = resumeData[section];
-
-  //     if (section === "summary" && typeof sectionData !== "string") {
-  //       console.error("❌ Expected a string but got:", sectionData);
-  //       alert("Invalid profile summary. Please enter text to enhance.");
-  //       return;
-  //     }
-
-  //     if (
-  //       (section === "experience" || section === "projects") &&
-  //       !Array.isArray(sectionData)
-  //     ) {
-  //       console.error(
-  //         `❌ Expected an array for ${section} but got:`,
-  //         sectionData
-  //       );
-  //       alert(`Invalid ${section} data. Please check your content.`);
-  //       return;
-  //     }
-
-  //     console.log("🚀 Sending Enhancement Request:", {
-  //       section,
-  //       content: sectionData,
-  //     });
-
-  //     const response = await enhanceResumeSection(section, sectionData);
-
-  //     if (!response || !Array.isArray(response)) {
-  //       console.error("❌ API returned an invalid response:", response);
-  //       alert("Enhancement failed. Try again.");
-  //       return;
-  //     }
-
-  //     console.log("✅ Enhancement Successful:", response);
-
-  //     setResumeData((prev) => ({
-  //       ...prev,
-  //       [section]:
-  //         section === "experience" || section === "projects"
-  //           ? prev[section].map((item, index) => ({
-  //               ...item,
-  //               accomplishment: response[index]?.bullets || item.accomplishment, // ✅ Correctly updating the bullets
-  //             }))
-  //           : response,
-  //     }));
-
-  //     await saveResume({ ...resumeData, [section]: response });
-  //   } catch (error) {
-  //     console.error("❌ Enhancement failed:", error);
-  //     alert("Failed to enhance content.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-  const handleAIEnhancement = async (section) => {
-    let isMounted = true; // Track if the component is mounted
-    setIsLoading(true);
+  // save resume in backend
+  const handleSaveResume = async () => {
     try {
-      const sectionData = resumeData[section];
-      // console.log("sectionData",sectionData[0].describe);
-      // const describeContent = sectionData.map((item) => item.describe).join("\n");
-      // console.log("sectionData and describeContent",sectionData, describeContent);
+      setIsSaving(true);
+      console.log("Sending resumeData to backend:", resumeData);
 
-      if (section === "summary" && typeof sectionData !== "string") {
-        console.error("❌ Expected a string but got:", sectionData);
-        alert("Invalid profile summary. Please enter text to enhance.");
-        return;
-      }
+      const response = await axios.post(
+        "http://localhost:5000/api/myTemp/save",
+        resumeData
+      );
 
-      if (
-        (section === "experience" || section === "projects") &&
-        !Array.isArray(sectionData)
-      ) {
-        console.error(
-          `❌ Expected an array for ${section} but got:`,
-          sectionData
-        );
-        alert(`Invalid ${section} data. Please check your content.`);
-        return;
-      }
-      if (
-        section === "achievements" &&
-        typeof sectionData[0].describe !== "string"
-      ) {
-        console.error("❌ Expected a string but got:", sectionData.describe);
-        alert(
-          "Invalid acheivements description. Please enter text to enhance."
-        );
-        return;
-      }
+      if (response.status === 200) {
+        const savedData = response.data.data;
 
-      console.log("🚀 Sending Enhancement Request:", {
-        section,
-        content: sectionData,
-      });
+        // Set _id in state for future update
+        setResumeData((prev) => ({ ...prev, _id: savedData._id }));
 
-      const response = await enhanceResumeSection(section, sectionData);
-      console.log("API Response:", response); // Debug log
-      if (!response) {
-        console.error("❌ API returned an invalid response:", response);
-        alert("Enhancement failed. Try again.");
-        return;
-      }
-      // alert(`${section} Enhanced Successfully`);
-
-      if (isMounted) {
-        if (section === "summary" && typeof response === "string") {
-          setResumeData((prev) => ({
-            ...prev,
-            summary: response,
-          }));
-          await saveResume({ ...resumeData, summary: response });
-        } else if (section === "experience" && Array.isArray(response)) {
-          const updatedExperience = resumeData.experience.map((exp, idx) => ({
-            ...exp,
-            accomplishment: response[idx]?.bullets || exp.accomplishment, // Update accomplishment with bullets or keep the original
-          }));
-
-          // Update the state with the enhanced experience data
-          setResumeData((prev) => ({
-            ...prev,
-            experience: [...updatedExperience], // Ensure a new array reference
-          }));
-
-          console.log("Updated Experience Data:", updatedExperience); // Debug log
-          alert("Experience Enhanced Successfully");
-
-          await saveResume({ ...resumeData, experience: updatedExperience });
-        } else if (section === "achievements" && typeof response === "string") {
-          setResumeData((prev) => ({
-            ...prev,
-            achievements: prev.achievements.map((achievement, idx) =>
-              idx === 0
-                ? { ...achievement, describe: response } // Update the first achievement's describe field
-                : achievement
-            ),
-          }));
-          await saveResume({ ...resumeData, summary: response });
-        }
+        // toast.success("Resume saved successfully!");
+        // console.log("Saved Data:", savedData);
+        // console.log("main data", resumeData);
+      } else {
+        toast.error("Failed to save resume.");
       }
     } catch (error) {
-      console.error("❌ Enhancement failed:", error);
-      if (isMounted) alert("Failed to enhance content.");
+      console.error("Save error:", error);
     } finally {
-      if (isMounted) {
-        setIsLoading(false); // Hide loader
-
-      }
+      setIsSaving(false);
     }
-
-    return () => {
-      isMounted = false; // Cleanup function
-    };
   };
+
+ 
+const enhanceSingleField = async (field) => {
+  if (!resumeData._id) {
+    toast.error("Please save your resume before enhancing a field.");
+    return;
+  }
+
+  try {
+    // Show loading toast
+    const loadingToastId = toast.loading(`Enhancing ${field}...`);
+
+    // Call save without toast
+    await handleSaveResume(false);
+
+    const payload = {
+      resumeId: resumeData._id,
+      field,
+      data: field === "experience" ? resumeData.experience : resumeData[field],
+    };
+
+    const response = await axios.post(
+      "http://localhost:5000/api/myTemp/enhance",
+      payload
+    );
+
+    if (response.data?.data) {
+      const updatedData = response.data.data;
+
+      setResumeData((prev) => ({
+        ...prev,
+        ...(field === "experience"
+          ? { experience: updatedData.experience }
+          : { [field]: updatedData[field] }),
+        _id: updatedData._id,
+      }));
+
+      // Update toast to success
+      toast.update(loadingToastId, {
+        render: `${field.charAt(0).toUpperCase() + field.slice(1)} enhanced successfully!`,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
+  } catch (error) {
+    toast.error(`Failed to enhance ${field}.`);
+    console.error(`Error enhancing ${field}:`, error);
+  }
+};
+
+
   const LoadingScreen = () => (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg flex flex-col items-center">
@@ -582,21 +459,21 @@ export const Temp8 = () => {
               </h4>
               <motion.button
                 className="w-full bg-gray-200 text-gray-800 p-2 rounded-lg hover:bg-gray-300 transition-all duration-300 text-sm hover:shadow-md"
-                onClick={() => handleAIEnhancement("summary")}
+                onClick={() => enhanceSingleField("summary")}
                 whileHover={{ scale: 1.03 }}
               >
                 Enhance Summary
               </motion.button>
               <motion.button
                 className="w-full bg-gray-200 text-gray-800 p-2 rounded-lg hover:bg-gray-300 transition-all duration-300 text-sm hover:shadow-md"
-                onClick={() => handleAIEnhancement("achievements")}
+                onClick={() => enhanceSingleField("achievements")}
                 whileHover={{ scale: 1.03 }}
               >
                 Enhance Achievements
               </motion.button>
               <motion.button
                 className="w-full bg-gray-200 text-gray-800 p-2 rounded-lg hover:bg-gray-300 transition-all duration-300 text-sm hover:shadow-md"
-                onClick={() => handleAIEnhancement("experience")}
+                onClick={() => enhanceSingleField("experience")}
                 whileHover={{ scale: 1.03 }}
               >
                 Enhance Experience
@@ -607,7 +484,7 @@ export const Temp8 = () => {
           <hr className="border-gray-300 my-2 w-full hidden md:block" />
           <motion.button
             className="w-12 h-12 md:w-full md:h-auto bg-green-500 text-white rounded-full md:rounded-full p-2 md:p-3 shadow-lg flex items-center justify-center group hover:bg-green-600 hover:shadow-xl md:flex-row md:justify-start md:space-x-2"
-            onClick={handleSave}
+            onClick={handleSaveResume}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.3 }}
@@ -897,32 +774,43 @@ export const Temp8 = () => {
                               </p>
                             </div>
                             <ul className="list-disc pl-4 mt-1 text-xs text-gray-700 leading-relaxed">
-                              {exp.accomplishment
-                                .split("\n")
+                              {(Array.isArray(exp.accomplishment)
+                                ? exp.accomplishment
+                                : exp.accomplishment.split("\n")
+                              )
                                 .filter((line) => line.trim() !== "")
                                 .map((bullet, bulletIdx) => (
                                   <li key={bulletIdx}>
                                     <span
                                       contentEditable
                                       onBlur={(e) => {
-                                        // Split the accomplishment into an array of lines
-                                        const updatedBullets =
-                                          exp.accomplishment
-                                            .split("\n")
-                                            .filter(
-                                              (line) => line.trim() !== ""
-                                            );
+                                        // Get latest content
+                                        const newText =
+                                          e.target.textContent.trim();
 
-                                        // Update the specific bullet
+                                        // Convert to array
+                                        const updatedBullets = Array.isArray(
+                                          exp.accomplishment
+                                        )
+                                          ? [...exp.accomplishment]
+                                          : exp.accomplishment
+                                              .split("\n")
+                                              .filter(
+                                                (line) => line.trim() !== ""
+                                              );
+
+                                        // Update specific bullet
                                         updatedBullets[
                                           bulletIdx
-                                        ] = `• ${e.target.textContent.trim()}`;
+                                        ] = `• ${newText}`;
 
-                                        // Join the updated bullets back into a string
+                                        // Convert back to string if original was string
                                         const updatedAccomplishment =
-                                          updatedBullets.join("\n");
+                                          Array.isArray(exp.accomplishment)
+                                            ? updatedBullets
+                                            : updatedBullets.join("\n");
 
-                                        // Update the accomplishment field in the experience section
+                                        // Update in state
                                         handleInputChange(
                                           "experience",
                                           "accomplishment",

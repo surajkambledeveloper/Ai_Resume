@@ -15,6 +15,7 @@ const temp7Routes = require("./routes/temp7Routes");
 const temp8Routes = require("./routes/temp8Routes");
 const temp9Routes = require("./routes/temp9Routes");
 const authRoutes = require('./routes/auth');
+const myTempRoute=require("./routes/myRoute")
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -39,6 +40,7 @@ app.use("/api/resume7", temp7Routes);
 app.use('/api/auth', authRoutes);
 app.use("/api/resume8", temp8Routes);
 app.use("/api/resume9", temp9Routes);
+app.use("/api/myTemp", myTempRoute);
 
 
 // Health check route

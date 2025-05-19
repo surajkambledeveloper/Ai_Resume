@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import WithoutAiTemp from './templateCards';
+import { useNavigate } from 'react-router-dom';
 
 const WithoutAi = () => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleBackClick = () => {
-    window.history.back();
-  };
+  // const handleBackClick = () => {
+  //   window.history.back();
+  // };
+  const navigate = useNavigate();
+
+const handleBackClick = () => {
+  navigate(-1); // Go back to the previous page
+   navigate('/home');
+};
+
 
   // Profile image URL
   const profileImage =
