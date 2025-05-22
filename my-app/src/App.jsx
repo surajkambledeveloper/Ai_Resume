@@ -12,6 +12,7 @@ import Temp6 from './components/Temp6';
 import Temp7 from './components/Temp7';
 import  {Temp8}  from "./components/Temp8"; // Named import
 import Temp9 from './components/Temp9';
+import Trytemp from './components/Trytemp';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Sidebar from './components/Sidebar';
@@ -49,6 +50,7 @@ function App() {
           <Route exact path='/Signup' element={<Signup/>} />
           <Route exact path='/PasswordReset' element={<PasswordReset/>} />
           <Route exact path="/printable-resume" element={<PrintableResume />} />
+          <Route exact path="/try" element={<Trytemp/>} />
         </Routes>
       
       </Router>

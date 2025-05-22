@@ -288,35 +288,65 @@ export const Temp8 = () => {
   );
 
   // save resume in backend
-  const handleSaveResume = async () => {
-    try {
-      setIsSaving(true);
-      console.log("Sending resumeData to backend:", resumeData);
+  // const handleSaveResume = async () => {
+  //   try {
+  //     setIsSaving(true);
+  //     console.log("Sending resumeData to backend:", resumeData);
 
-      const response = await axios.post(
-        "http://localhost:5000/api/myTemp/save",
-        resumeData
-      );
+  //     const response = await axios.post(
+  //       "http://localhost:5000/api/myTemp/save",
+  //       resumeData
+  //     );
 
-      if (response.status === 200) {
-        const savedData = response.data.data;
+  //     if (response.status === 200) {
+  //       const savedData = response.data.data;
 
-        // Set _id in state for future update
-        setResumeData((prev) => ({ ...prev, _id: savedData._id }));
+  //       // Set _id in state for future update
+  //       setResumeData((prev) => ({ ...prev, _id: savedData._id }));
 
-        // toast.success("Resume saved successfully!");
-        // console.log("Saved Data:", savedData);
-        // console.log("main data", resumeData);
-      } else {
-        toast.error("Failed to save resume.");
-      }
-    } catch (error) {
-      console.error("Save error:", error);
-    } finally {
-      setIsSaving(false);
+  //       // toast.success("Resume saved successfully!");
+  //       // console.log("Saved Data:", savedData);
+  //       // console.log("main data", resumeData);
+  //     } else {
+  //       toast.error("Failed to save resume.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Save error:", error);
+  //   } finally {
+  //     setIsSaving(false);
+  //   }
+  // };
+
+const handleSaveResume = async () => {
+  try {
+    setIsSaving(true);
+    console.log("Sending resumeData to backend:", resumeData);
+
+    const response = await axios.post(
+      "http://localhost:5000/api/myTemp/save",
+      resumeData
+    );
+
+    if (response.status === 200) {
+      const savedData = response.data.data;
+
+      // Set _id in state for future update
+      setResumeData((prev) => ({ ...prev, _id: savedData._id }));
+
+      // ✅ Store in localStorage
+      localStorage.setItem("resumeId", savedData._id);
+
+      // Optional: show toast
+      // toast.success("Resume saved successfully!");
+    } else {
+      toast.error("Failed to save resume.");
     }
-  };
-
+  } catch (error) {
+    console.error("Save error:", error);
+  } finally {
+    setIsSaving(false);
+  }
+};
  
 const enhanceSingleField = async (field) => {
   if (!resumeData._id) {
@@ -366,6 +396,25 @@ const enhanceSingleField = async (field) => {
     console.error(`Error enhancing ${field}:`, error);
   }
 };
+
+useEffect(() => {
+  const fetchResume = async () => {
+    const resumeId = localStorage.getItem("resumeId"); // 👈 get it here
+    if (!resumeId) return;
+
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/myTemp/resume/${resumeId}`
+      );
+      setResumeData(response.data); // 👈 set it in state
+    } catch (error) {
+      console.error("Failed to fetch resume:", error);
+    }
+  };
+
+  fetchResume();
+}, []);
+
 
 
   const LoadingScreen = () => (

@@ -149,7 +149,6 @@ Output format:
         (item) => ({
           keyAchievements: item.title,
           describe: item.description,
-          
         })
       );
 

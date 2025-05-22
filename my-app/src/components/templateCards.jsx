@@ -9,6 +9,7 @@ import temp6 from '../images/temp6.png';
 import temp7 from '../images/temp7.png';
 import temp8 from '../images/temp8.jpg';
 import temp9 from '../images/temp9.jpg';
+import { useNavigate } from 'react-router-dom';
 const WithoutAiTemp = ({ setActiveStep }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [hoveredTemplate, setHoveredTemplate] = useState(null);
@@ -76,12 +77,24 @@ const WithoutAiTemp = ({ setActiveStep }) => {
       preview: temp9,
       description: 'Vibrant layout for graphic designers showcasing creative excellence',
       url: '/Temp9'
+    },
+    {
+      id: 10,
+      name: 'Design Innovator',
+      preview: temp9,
+      description: 'Vibrant layout for graphic designers showcasing creative excellence',
+      url: '/try'
     }
   ];
 
+  // const handleSelectTemplate = (template) => {
+  //   setSelectedTemplate(template.id);
+  //   window.location.href = template.url; // Navigate to the template URL
+  // };
+  const navigate = useNavigate();  // 
   const handleSelectTemplate = (template) => {
     setSelectedTemplate(template.id);
-    window.location.href = template.url; // Navigate to the template URL
+    navigate(template.url); // 
   };
 
   return (
