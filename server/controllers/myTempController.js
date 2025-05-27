@@ -3,7 +3,10 @@ const ResumeEditorModern = require("../models/myTempModel");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const geminiModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
+const puppeteer = require("puppeteer");
+const path = require("path");
+const ejs = require("ejs");
+const Resume = require("../models/myTempModel");
 const mongoose = require("mongoose");
 
 const saveResume = async (req, res) => {
@@ -13,7 +16,7 @@ const saveResume = async (req, res) => {
     if (_id) {
       // Check if _id is a valid ObjectId
       if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(400).json({ message: "Invalid resume ID" });
+        return res.status(400).json({ err: "Invalid resume ID" });
       }
 
       // Update existing resume
@@ -23,7 +26,7 @@ const saveResume = async (req, res) => {
         { new: true }
       );
       if (!savedResume) {
-        return res.status(404).json({ message: "Resume not found for update" });
+        return res.status(404).json({ err: "Resume not found for update" });
       }
       return res
         .status(200)
@@ -40,7 +43,7 @@ const saveResume = async (req, res) => {
     console.error("Error saving resume:", error);
     res
       .status(500)
-      .json({ message: "Error saving resume", error: error.message });
+      .json({ Errormessage: "Error saving resume", error: error.message });
   }
 };
 
@@ -61,7 +64,7 @@ const enhanceField = async (req, res) => {
       case "summary":
         prompt = `Enhance the 'summary' section of a professional resume.
                   - Keep it concise and impactful.
-                   - Improve wording to sound more professional.
+                  - Improve wording to sound more professional.
                   - Optimize for ATS with keywords.
                   User Input: ${JSON.stringify(data)}
                   Return only valid JSON: {"${field}": ""}`;
@@ -77,7 +80,7 @@ Each experience object includes:
 - companyLocation
 - accomplishment: array of 2–5 short bullet points
 
-📝 Instructions:
+ Instructions:
 - DO NOT remove or skip any experience items.
 - DO NOT change order of array or bullet points.
 - Only enhance the text of each bullet point inside "accomplishment".
@@ -183,7 +186,59 @@ Output format:
   }
 };
 
-// getResume api for fetch data
+// Downolad pdf function
+const downloadPDF = async (req, res) => {
+  try {
+    const { resumeId } = req.params;
+    console.log("Received request to download PDF for resumeId:", resumeId);
+
+    const resumeData = await Resume.findById(resumeId);
+    if (!resumeData) {
+      // console.log("Resume not found in database");
+      return res.status(404).json({ error: "Resume not found" });
+    }
+
+    // console.log("Resume data found:", resumeData);
+
+    const html = await ejs.renderFile(
+      path.join(__dirname, "../views/myResumeTemplate.ejs"),
+      { resumeData }
+    );
+
+    // console.log("Rendered HTML content length:", html.length);
+    // Optional: Write HTML to disk for debugging
+    // require("fs").writeFileSync("resume_debug.html", html);
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+    // console.log("Launched Puppeteer");
+
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: "networkidle0" });
+    // console.log("HTML content set in Puppeteer page");
+
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      printBackground: true,
+    });
+
+    await browser.close();
+    // console.log("PDF buffer generated. Size:", pdfBuffer.length);
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "inline; filename=UptoSkills.pdf");
+    res.setHeader("Content-Length", pdfBuffer.length); // Important for some browsers
+
+    // console.log("Sending PDF buffer to client...");
+    res.end(pdfBuffer);
+  } catch (error) {
+    console.error("PDF download error:", error);
+    res.status(500).json({ error: "Failed to generate PDF" });
+  }
+};
+
 const getResume = async (req, res) => {
   try {
     const resume = await ResumeEditorModern.findById(req.params.id); // ya .findById(req.params.id)
@@ -191,11 +246,11 @@ const getResume = async (req, res) => {
 
     res.status(200).json(resume);
   } catch (error) {
-    console.error("Error fetching resume:", error);
-    res
+    // console.error("Error fetching resume:", error);
+    return res
       .status(500)
-      .json({ message: "Error fetching resume", error: error.message });
+      .json({ error: "Error fetching resume", error: error.message });
   }
 };
 
-module.exports = { saveResume, enhanceField, getResume };
+module.exports = { saveResume, enhanceField, getResume, downloadPDF };

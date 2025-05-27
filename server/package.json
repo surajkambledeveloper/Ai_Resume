@@ -5,7 +5,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
-    
   },
   "keywords": [],
   "author": "",
@@ -19,6 +18,7 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
     "helmet": "^8.0.0",
@@ -31,7 +31,7 @@
     "openai": "^4.78.1",
     "pdf-parse": "^1.1.1",
     "punycode": "^2.3.1",
-    "puppeteer": "^24.4.0",
+    "puppeteer": "^24.9.0",
     "winston": "^3.17.0"
   }
 }

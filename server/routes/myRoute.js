@@ -1,12 +1,12 @@
 
 const express = require('express');
 const router = express.Router();
-const { saveResume, enhanceField,getResume } = require('../controllers/myTempController');
+const { saveResume, enhanceField,getResume,downloadPDF } = require('../controllers/myTempController');
 
 // Routes
 router.post('/save', saveResume);
 router.post('/enhance', enhanceField);
-// router.post('/generate-pdf', generatePDFTemp6);
 router.get("/resume/:id", getResume); //
+router.get("/download/:resumeId", downloadPDF);
 
 module.exports = router;

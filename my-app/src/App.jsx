@@ -10,7 +10,7 @@ import Temp3 from './components/Temp3';
 import Temp5 from './components/Temp5';
 import Temp6 from './components/Temp6';
 import Temp7 from './components/Temp7';
-import  {Temp8}  from "./components/Temp8"; // Named import
+import  Temp8  from "./components/Temp8"; // Named import
 import Temp9 from './components/Temp9';
 import Trytemp from './components/Trytemp';
 import Login from './components/Login';
