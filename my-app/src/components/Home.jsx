@@ -28,7 +28,7 @@ const Home = () => {
         <div className="w-full md:max-w-lg text-center md:text-left">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
             <span className="text-gray-800">Ai Resume Builder is a </span>
-            <span className="text-indigo-600">Resume Builder</span>
+            <span className="text-orange-600">Resume Builder</span>
             <span className="text-gray-800"> helps you get hired at top companies</span>
           </h1>
           <div className="flex flex-col sm:flex-row justify-center md:justify-start mt-6 sm:mt-8 space-y-3 sm:space-y-0 sm:space-x-4 ">
@@ -67,7 +67,7 @@ const Home = () => {
       </div>
 
       {/* ATS Hero Section with Gradient Background */}
-      <div className="relative px-4 py-20 md:py-32 overflow-hidden bg-gradient-to-br from-gray-800 via-gray-900 to-blue-900">
+      <div className="relative px-4 py-20 md:py-32 overflow-hidden bg-gradient-to-br from-orange-800 via-green-900 to-orange-900">
         {/* Curved Lines Decoration */}
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -154,7 +154,7 @@ const Home = () => {
                   animate ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
                 }`}
               >
-                <div className="bg-indigo-100 p-3 rounded-lg mr-4">
+                <div className="bg-orange-100 p-3 rounded-lg mr-4">
                   <svg
                     className="w-6 h-6 text-indigo-500"
                     fill="currentColor"
@@ -177,7 +177,7 @@ const Home = () => {
               >
                 <div className="bg-indigo-100 p-3 rounded-lg mr-4">
                   <svg
-                    className="w-6 h-6 text-indigo-500"
+                    className="w-6 h-6 text-orange-500"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
