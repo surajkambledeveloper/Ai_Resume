@@ -22,7 +22,7 @@ const handleBackClick = () => {
     'https://miro.medium.com/v2/resize:fit:4800/format:webp/1*mAIfR-lj6YkUEI7AaP6CGg.jpeg';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-300 via-indigo-300 to-white p-4 py-12 md:p-12">
+    <div className="min-h-screen bg-gradient-to-br from-orange-300 via-emerald-300 to-white p-4 py-12 md:p-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -32,7 +32,7 @@ const handleBackClick = () => {
         {/* Back Button */}
         <motion.button
           onClick={handleBackClick}
-          className="mb-8 flex items-center text-white hover:text-pink-100 transition-all duration-300 ease-in-out focus:outline-none p-3 rounded-full shadow-xl bg-pink-600 hover:bg-pink-700 backdrop-blur-lg"
+          className="mb-8 flex items-center text-white hover:text-orange-100 transition-all duration-300 ease-in-out focus:outline-none p-3 rounded-full shadow-xl bg-orange-600 hover:bg-pink-700 backdrop-blur-lg"
           aria-label="Go back"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -63,14 +63,14 @@ const handleBackClick = () => {
           onHoverEnd={() => setIsHovered(false)}
         >
           {/* Decorative elements */}
-          <div className="absolute -top-20 -right-20 w-40 h-40 bg-pink-500 opacity-20 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-indigo-500 opacity-20 rounded-full blur-3xl"></div>
+          <div className="absolute -top-20 -right-20 w-40 h-40 bg-orange-500 opacity-20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-emerald-500 opacity-20 rounded-full blur-3xl"></div>
 
           <motion.div
             className="flex-shrink-0 mb-6 md:mb-0 relative"
             whileHover={{ scale: 1.07 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-pink-400 to-indigo-500 rounded-full blur-md opacity-30 scale-125"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-emerlad-500 rounded-full blur-md opacity-30 scale-125"></div>
             <img
               src={profileImage}
               alt="User Avatar"
@@ -88,7 +88,7 @@ const handleBackClick = () => {
 
           <div className="text-center md:text-left z-10">
             <motion.h2
-              className="text-5xl font-extrabold mb-6 tracking-tight leading-tight bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 bg-clip-text text-transparent"
+              className="text-5xl font-extrabold mb-6 tracking-tight leading-tight bg-gradient-to-r from-orange-700 via-orange-700 to-emerald-700 bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
@@ -115,7 +115,7 @@ const handleBackClick = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 group-hover:from-pink-500 group-hover:to-purple-500 transition-all duration-500"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-orange-600 to-emerald-600 group-hover:from-orange-500 group-hover:to-emerald-500 transition-all duration-500"></span>
               <span className="relative flex items-center justify-center">
                 Get Started
                 <svg
