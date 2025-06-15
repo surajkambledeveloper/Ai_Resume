@@ -103,11 +103,11 @@ const WithoutAiTemp = ({ setActiveStep }) => {
         initial={{ opacity: 0, y: -20 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.8 }}
-        className="text-4xl font-extrabold mb-3 text-center tracking-wide bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 bg-clip-text text-transparent"
+        className="text-4xl font-extrabold mb-3 text-center tracking-wide bg-gradient-to-r from-orange-700 via-green-700 to-orange-700 bg-clip-text text-transparent"
       >
         Choose Your Perfect Template
       </motion.h3>
-      <p className="text-lg text-center text-indigo-200 mb-12 max-w-2xl mx-auto">
+      <p className="text-lg text-center text-emerald-500 mb-12 max-w-2xl mx-auto">
         Select a design that showcases your professional identity and captures attention
       </p>
       <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
